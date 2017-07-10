@@ -1,0 +1,89 @@
+cell_count = 9
+cell_size = 60px
+
+
+
+.tic-tac
+	margin-top 40px
+	&__grid
+		width cell_size*3
+		display flex
+		flex-wrap wrap
+		position relative
+	&__cell
+		size cell_size
+		border 1px solid #000
+		display flex
+		&:hover .tic-tac__label
+			opacity .3
+	&__label
+		width 100%
+		color #f00
+		font-size 24px
+		font-weight 700
+		text-align center
+		font-family sans-serif
+		opacity 0
+		transition opacity .2s
+		cursor pointer
+		flex 0 1 auto
+		// display none
+		&:hover
+			opacity .7
+	&__input
+		display none
+	&__game-over
+		size 100% calc(100% + 30px)
+		font-size 24px
+		font-weight 700
+		background-color alpha(#fff, .8)
+		position absolute
+		top 0
+		left 0
+		display flex
+		align-items flex-end
+		justify-content center
+		opacity 0
+		visibility hidden
+		z-index -1
+
+
+for i in (0..8)
+	input#tic_{i}:checked ~ .tic-tac__cell
+		.tic-tac__label--{i}
+			opacity 1
+			&.tic-tac__label--tac
+				display none
+
+	input#tac_{i}:checked ~ .tic-tac__cell
+		.tic-tac__label--{i}
+			opacity 1
+			&.tic-tac__label--tic
+				display none
+
+win_combos = {
+	hor_1: (0 1 2), 
+	hor_2: (3 4 5), 
+	hor_3: (6 7 8),
+	vert_1: (0 3 6),
+	vert_2: (1 4 7),
+	vert_3: (2 5 8),
+	cross_1: (0 4 8),
+	cross_2: (2 4 6)
+}
+
+for _, combos in win_combos
+	input#tic_{combos[0]}:checked ~ input#tic_{combos[1]}:checked ~ input#tic_{combos[2]}:checked,
+	input#tac_{combos[0]}:checked ~ input#tac_{combos[1]}:checked ~ input#tac_{combos[2]}:checked
+		& ~ .tic-tac__game-over
+			opacity 1
+			visibility visible
+			z-index 1
+		& ~ .tic-tac__cell
+			.tic-tac__label--{combos[0]},
+			.tic-tac__label--{combos[1]},
+			.tic-tac__label--{combos[2]}
+				background-color green
+	// for i in (0..(length(combos) - 1))
+		// input#tic_{combos[i]}:checked
+			

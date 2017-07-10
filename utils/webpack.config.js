@@ -61,7 +61,7 @@ module.exports = {
 					}, {
 						loader: 'stylus-loader',
 						options: {
-							compress: true,
+							compress: false,
 							use: [autoprefixer({browsers: ['> 1%', 'ie > 9', 'iOS > 6'], hideWarnings: true})],
 						},
 					},

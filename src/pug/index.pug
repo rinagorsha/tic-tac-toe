@@ -1,3 +1,15 @@
 extends extends/_layout
 
 block content
+	section.tic-tac
+
+		.tic-tac__grid
+			for _, i in Array(9)
+				input.tic-tac__input(type="radio")&attributes({id: `tic_${i}`, name: `cell_${i}`})
+				input.tic-tac__input(type="radio")&attributes({id: `tac_${i}`, name: `cell_${i}`})
+				
+			for _, i in Array(9)
+				.tic-tac__cell
+					label.tic-tac__label.tic-tac__label--tic&attributes({for: `tic_${i}`, class: `tic-tac__label--${i}`}) x
+					label.tic-tac__label.tic-tac__label--tac&attributes({for: `tac_${i}`, class: `tic-tac__label--${i}`}) o
+			.tic-tac__game-over Game over
