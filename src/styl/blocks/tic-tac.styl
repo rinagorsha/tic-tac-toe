@@ -2,91 +2,15 @@ cell_count = 9
 cell_size = 60px
 
 .tic-tac
-	margin-top 40px
 	&__grid
 		width cell_size*3
 		display flex
 		flex-wrap wrap
 		position relative
-	&__cell
-		size cell_size
-		overflow hidden
-		border 2px solid #434343
-		background-color #fff
-		border-bottom none
-		border-left none
-		position relative
-		display flex
-		&:nth-of-type(-n+3)
-			border-top none
-		&:nth-of-type(3n)
-			border-right none
-		&:hover
-			.tic-tac__label
-				opacity .3
-	&__label
-		size 100% (sqrt(cell_size*cell_size * 2))
-		color #f00
-		font-size 24px
-		font-weight 700
-		text-align center
-		font-family sans-serif
-		opacity 0
-		flex 0 1 auto
-		position absolute
-		display flex
-		cursor pointer
-		transition opacity .2s
-		.tic-tac__cell &:hover
-			opacity .7
-		&:before,
-		&:after
-			position absolute
-			top 50%
-			
-			border 4px solid #f00
-		&--tic
-			background-color #eee
-			top 0
-			left 0
-			justify-content flex-end
-			align-items center
-			transform rotate(45deg) translate(-38px, -9px)
-			&:before,
-			&:after
-				content ""
-				border-width 2px
-				width 20px
-				right 10px
-				transform translate(0, -50%)
-			&:after
-				transform translate(0, -50%) rotate(-90deg) 
-				
-		&--tac
-			background-color #eee
-			left 100%
-			top 100%
-			transform rotate(45deg) translate(-63px, -9px)
-			justify-content flex-start
-			align-items center
-			&:before
-				content ""
-				size 20px
-				border-radius 50%
-				left 8px
-				display block
-				transform translate(0, -50%) 
-				
-	&__input
-		display none
-		&:target
-			background-color #f00
-
 	&__game-over
 		size 100% calc(100% + 30px)
 		font-size 24px
 		font-weight 700
-		background-color alpha(#fff, .8)
 		position absolute
 		top 0
 		left 0
@@ -96,54 +20,71 @@ cell_size = 60px
 		opacity 0
 		visibility hidden
 		z-index -1
-
-
-for i in (0..8)
-	input#tic_{i}:checked ~ .tic-tac__cell
-		.tic-tac__label--{i}
-			height 100%
-			opacity 1
-			position relative
-			top 0
-			left 0
-			transform none
-			cursor default
+	&__cell
+		size cell_size
+		color #f00
+		font-size 24px
+		font-weight 700
+		text-align center
+		border 2px solid #434343
+		background-color #fff
+		position relative
+		display block
+		cursor pointer
+		&:before
+		&:after
+			display none
+			border 2px solid #f00
+		&:hover
 			&:before
+			&:after
+				display block
+				border-color #f3919c
+		&--tic
+			&:before,
+			&:after
+				content ""
+				width 20px
+				position absolute
+				top 50%
 				left 50%
-				right auto
+			&:before
 				transform translate(-50%, -50%) rotate(45deg)
 			&:after
-				left 50%
-				right auto
 				transform translate(-50%, -50%) rotate(-45deg)
-			&.tic-tac__label--tic
-				display block
-			&.tic-tac__label--tac
-				display none
-
-	input#tac_{i}:checked ~ .tic-tac__cell
-		.tic-tac__label--{i}
-			height 100%
-			opacity 1
-			position relative
-			top 0
-			left 0
-			transform none
-			cursor default
+		&--tac
 			&:before
+				content ""
+				size 20px
+				border-width 4px
+				border-radius 50%
+				position absolute
+				top 50%
 				left 50%
 				transform translate(-50%, -50%)
-			&.tic-tac__label--tic
-				display none
-			&.tic-tac__label--tac
-				display block
 
-// draw
-.tic-tac__input--0:checked ~ .tic-tac__input--1:checked ~ .tic-tac__input--2:checked ~ .tic-tac__input--3:checked ~ .tic-tac__input--4:checked ~ .tic-tac__input--5:checked ~ .tic-tac__input--6:checked ~ .tic-tac__input--7:checked ~ .tic-tac__input--8:checked
-	& ~ .tic-tac__game-over--draw
-		opacity 1
-		visibility visible
-		z-index 1
+		for i in (0..8)
+			&--{i}
+				order i
+
+		for turn in (1..8)
+			&--turn-{turn}
+				display none
+	&__input
+		display none
+		for turn in (0..8)
+			for i in (0..8)
+				&--turn-{turn}&--{i}:checked
+					& ~ .tic-tac__cell--{i}.tic-tac__cell--turn-{turn} // checked cell
+						&:before,
+						&:after
+							display block
+					& ~ .tic-tac__cell--{i}:not(.tic-tac__cell--turn-{turn})
+						display none // hide same cells
+					& ~ .tic-tac__cell--turn-{turn}:not(.tic-tac__cell--{i})
+						display none // hide same turns
+					& ~ .tic-tac__cell--turn-{turn+1}
+						display block // show next turn
 
 win_combos = {
 	hor_1: (0 1 2),
@@ -155,19 +96,20 @@ win_combos = {
 	cross_1: (0 4 8),
 	cross_2: (2 4 6)
 }
-
-// win
 for _, combos in win_combos
-	input#tic_{combos[0]}:checked ~ input#tic_{combos[1]}:checked ~ input#tic_{combos[2]}:checked,
-	input#tac_{combos[0]}:checked ~ input#tac_{combos[1]}:checked ~ input#tac_{combos[2]}:checked
+	.tic-tac__input--tic.tic-tac__input--{combos[0]}:checked ~ .tic-tac__input--tic.tic-tac__input--{combos[1]}:checked ~ .tic-tac__input--tic.tic-tac__input--{combos[2]}:checked,
+	.tic-tac__input--tac.tic-tac__input--{combos[0]}:checked ~ .tic-tac__input--tac.tic-tac__input--{combos[1]}:checked ~ .tic-tac__input--tac.tic-tac__input--{combos[2]}:checked
+		& ~ .tic-tac__cell
+			&:before
+			&:after
+				border-color #cbcbcb
+			&--{combos[0]},
+			&--{combos[1]},
+			&--{combos[2]}
+				&:before
+				&:after
+					border-color #f00
 		& ~ .tic-tac__game-over
 			opacity 1
 			visibility visible
 			z-index 1
-		& ~ .tic-tac__game-over--draw
-			display none
-		& ~ .tic-tac__cell
-			.tic-tac__label--{combos[0]},
-			.tic-tac__label--{combos[1]},
-			.tic-tac__label--{combos[2]}
-				background-color green
