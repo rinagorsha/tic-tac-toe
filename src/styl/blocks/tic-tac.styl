@@ -2,6 +2,7 @@ cell_count = 9
 cell_size = 60px
 
 .tic-tac
+	padding 20px
 	&__grid
 		width cell_size*3
 		display flex
@@ -27,11 +28,19 @@ cell_size = 60px
 		font-weight 700
 		text-align center
 		border 2px solid #434343
+		border-left none
+		border-top none
 		background-color #fff
 		position relative
 		display block
 		cursor pointer
-		&:before
+		&:nth-of-type(3n)
+			border-right none
+		&:nth-of-type(9n),
+		&:nth-of-type(9n-1),
+		&:nth-of-type(9n-2)
+			border-bottom none
+		&:before,
 		&:after
 			display none
 			border 2px solid #f00
@@ -76,8 +85,10 @@ cell_size = 60px
 			for i in (0..8)
 				&--turn-{turn}&--{i}:checked
 					& ~ .tic-tac__cell--{i}.tic-tac__cell--turn-{turn} // checked cell
+						cursor default
 						&:before,
 						&:after
+							border-color #f00
 							display block
 					& ~ .tic-tac__cell--{i}:not(.tic-tac__cell--turn-{turn})
 						display none // hide same cells
@@ -86,6 +97,14 @@ cell_size = 60px
 					& ~ .tic-tac__cell--turn-{turn+1}
 						display block // show next turn
 
+// draw
+.tic-tac__input--0:checked ~ .tic-tac__input--1:checked ~ .tic-tac__input--2:checked ~ .tic-tac__input--3:checked ~ .tic-tac__input--4:checked ~ .tic-tac__input--5:checked ~ .tic-tac__input--6:checked ~ .tic-tac__input--7:checked ~ .tic-tac__input--8:checked
+	& ~ .tic-tac__game-over--draw
+		opacity 1
+		visibility visible
+		z-index 1
+
+// win
 win_combos = {
 	hor_1: (0 1 2),
 	hor_2: (3 4 5),
@@ -113,3 +132,7 @@ for _, combos in win_combos
 			opacity 1
 			visibility visible
 			z-index 1
+			&--draw
+				opacity 0
+				visibility hidden
+				z-index -1

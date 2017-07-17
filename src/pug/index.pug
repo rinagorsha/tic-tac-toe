@@ -7,7 +7,7 @@ block content
 			for _, i in Array(9)
 				for _, turn in Array(9)
 					- var player = turn % 2 == 0 ? 'tic' : 'tac' //- tic player first
-					input.tic-tac__input(type="radio")&attributes({id: `turn-${turn}_cell-${i}_name-${player}`, name: `turn-${turn}_cell-${i}`})(class= `tic-tac__input--turn-${turn} tic-tac__input--${i} tic-tac__input--${player}`)
+					input.tic-tac__input(type="radio")&attributes({class: `tic-tac__input--turn-${turn} tic-tac__input--${i} tic-tac__input--${player}`, id: `turn-${turn}_cell-${i}_name-${player}`, name: `turn-${turn}_cell-${i}`})
 
 			//- cells
 			for _, turn in Array(9)
@@ -16,5 +16,8 @@ block content
 					- var player = turn % 2 == 0 ? 'tic' : 'tac' //- tic player first
 					label.tic-tac__cell&attributes({for: `turn-${turn}_cell-${i}_name-${player}`, class: `tic-tac__cell--${i} tic-tac__cell--turn-${turn} tic-tac__cell--${player}`})
 
-			.tic-tac__game-over Game over
+			.tic-tac__game-over
+				| Game over
+				br
+				a.button(href="/") Restart
 			.tic-tac__game-over.tic-tac__game-over--draw Draw
