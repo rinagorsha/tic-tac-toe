@@ -7,6 +7,7 @@ tic(width=20px)
 	&:after
 		content ""
 		width width
+		box-sizing border-box
 		border 2px solid #f00
 		position absolute
 		top 50%
@@ -21,6 +22,7 @@ tac(width=20px)
 	&:before
 		content ""
 		size width
+		box-sizing border-box
 		border 2px solid #f00
 		border-width 4px
 		border-radius 50%
@@ -30,6 +32,7 @@ tac(width=20px)
 		transform translate(-50%, -50%)
 
 .tic-tac
+	box-sizing border-box
 	padding 20px
 	&__grid
 		width cell_size*3
@@ -40,6 +43,7 @@ tac(width=20px)
 	
 	&__cell
 		size cell_size
+		box-sizing border-box
 		color #f00
 		font-size 24px
 		font-weight 700
@@ -97,6 +101,7 @@ tac(width=20px)
 
 .tic-tac-gameover
 	width 100%
+	box-sizing border-box
 	font-size 24px
 	font-weight 700
 	text-align center
@@ -114,15 +119,16 @@ tac(width=20px)
 		text-decoration none
 		font-size 20px
 		text-decoration none
-		background-color #c9c9c9
+		background-color #cbcbcb
 		padding 5px 15px 7px
 		display inline-block
 		&:hover
-			background-color #acacac
+			background-color #f00
 
 
 .tic-tac-win
 	margin-bottom 15px
+	display none
 	&__player
 		size 20px
 		margin-left 5px
@@ -140,8 +146,7 @@ tac(width=20px)
 		display block
 		.tic-tac-gameover__score--draw
 			display block
-		.tic-tac-win
-			display none
+		
 
 // win
 win_combos = {
@@ -172,6 +177,8 @@ for _, combos in win_combos
 				.tic-tac-gameover__score--win
 					display block
 				.tic-tac-gameover__score--draw
-					display none
+					display none !important
+				.tic-tac-win
+					display block
 				.tic-tac-win__player--{player}
 					display inline-block
