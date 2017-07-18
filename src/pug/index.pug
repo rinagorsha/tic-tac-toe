@@ -16,8 +16,12 @@ block content
 					- var player = turn % 2 == 0 ? 'tic' : 'tac' //- tic player first
 					label.tic-tac__cell&attributes({for: `turn-${turn}_cell-${i}_name-${player}`, class: `tic-tac__cell--${i} tic-tac__cell--turn-${turn} tic-tac__cell--${player}`})
 
-			.tic-tac__game-over
-				| Game over
-				br
-				a.button(href="/") Restart
-			.tic-tac__game-over.tic-tac__game-over--draw Draw
+			.tic-tac-gameover
+				.tic-tac-gameover__score.tic-tac-gameover__score--win Game over
+				.tic-tac-gameover__score.tic-tac-gameover__score--draw Draw
+				.tic-tac-win
+					| Player
+					span.tic-tac-win__player.tic-tac-win__player--tic
+					span.tic-tac-win__player.tic-tac-win__player--tac
+					| wins!
+				a.tic-tac-gameover__button(href="/") Restart

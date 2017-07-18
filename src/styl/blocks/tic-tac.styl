@@ -1,6 +1,34 @@
 cell_count = 9
 cell_size = 60px
 
+tic(width=20px)
+	position relative
+	&:before,
+	&:after
+		content ""
+		width width
+		border 2px solid #f00
+		position absolute
+		top 50%
+		left 50%
+	&:before
+		transform translate(-50%, -50%) rotate(45deg)
+	&:after
+		transform translate(-50%, -50%) rotate(-45deg)
+
+tac(width=20px)
+	position relative
+	&:before
+		content ""
+		size width
+		border 2px solid #f00
+		border-width 4px
+		border-radius 50%
+		position absolute
+		top 50%
+		left 50%
+		transform translate(-50%, -50%)
+
 .tic-tac
 	padding 20px
 	&__grid
@@ -8,19 +36,8 @@ cell_size = 60px
 		display flex
 		flex-wrap wrap
 		position relative
-	&__game-over
-		size 100% calc(100% + 30px)
-		font-size 24px
-		font-weight 700
-		position absolute
-		top 0
-		left 0
-		display flex
-		align-items flex-end
-		justify-content center
-		opacity 0
-		visibility hidden
-		z-index -1
+
+	
 	&__cell
 		size cell_size
 		color #f00
@@ -31,7 +48,6 @@ cell_size = 60px
 		border-left none
 		border-top none
 		background-color #fff
-		position relative
 		display block
 		cursor pointer
 		&:nth-of-type(3n)
@@ -45,32 +61,14 @@ cell_size = 60px
 			display none
 			border 2px solid #f00
 		&:hover
-			&:before
+			&:before,
 			&:after
 				display block
 				border-color #f3919c
 		&--tic
-			&:before,
-			&:after
-				content ""
-				width 20px
-				position absolute
-				top 50%
-				left 50%
-			&:before
-				transform translate(-50%, -50%) rotate(45deg)
-			&:after
-				transform translate(-50%, -50%) rotate(-45deg)
+			tic()
 		&--tac
-			&:before
-				content ""
-				size 20px
-				border-width 4px
-				border-radius 50%
-				position absolute
-				top 50%
-				left 50%
-				transform translate(-50%, -50%)
+			tac()
 
 		for i in (0..8)
 			&--{i}
@@ -97,12 +95,53 @@ cell_size = 60px
 					& ~ .tic-tac__cell--turn-{turn+1}
 						display block // show next turn
 
+.tic-tac-gameover
+	width 100%
+	font-size 24px
+	font-weight 700
+	text-align center
+	padding-top calc(100% + 15px)
+	position absolute
+	top 0
+	left 0
+	display none
+	&__score
+		margin-bottom 10px
+		display none
+	&__button
+		color #fff
+		font-weight 400
+		text-decoration none
+		font-size 20px
+		text-decoration none
+		background-color #c9c9c9
+		padding 5px 15px 7px
+		display inline-block
+		&:hover
+			background-color #acacac
+
+
+.tic-tac-win
+	margin-bottom 15px
+	&__player
+		size 20px
+		margin-left 5px
+		margin-right 5px
+		vertical-align middle
+		display none
+		&--tic
+			tic()
+		&--tac
+			tac()
+
 // draw
 .tic-tac__input--0:checked ~ .tic-tac__input--1:checked ~ .tic-tac__input--2:checked ~ .tic-tac__input--3:checked ~ .tic-tac__input--4:checked ~ .tic-tac__input--5:checked ~ .tic-tac__input--6:checked ~ .tic-tac__input--7:checked ~ .tic-tac__input--8:checked
-	& ~ .tic-tac__game-over--draw
-		opacity 1
-		visibility visible
-		z-index 1
+	& ~ .tic-tac-gameover
+		display block
+		.tic-tac-gameover__score--draw
+			display block
+		.tic-tac-win
+			display none
 
 // win
 win_combos = {
@@ -116,23 +155,23 @@ win_combos = {
 	cross_2: (2 4 6)
 }
 for _, combos in win_combos
-	.tic-tac__input--tic.tic-tac__input--{combos[0]}:checked ~ .tic-tac__input--tic.tic-tac__input--{combos[1]}:checked ~ .tic-tac__input--tic.tic-tac__input--{combos[2]}:checked,
-	.tic-tac__input--tac.tic-tac__input--{combos[0]}:checked ~ .tic-tac__input--tac.tic-tac__input--{combos[1]}:checked ~ .tic-tac__input--tac.tic-tac__input--{combos[2]}:checked
-		& ~ .tic-tac__cell
-			&:before
-			&:after
-				border-color #cbcbcb
-			&--{combos[0]},
-			&--{combos[1]},
-			&--{combos[2]}
-				&:before
+	for player in 'tic' 'tac'
+		.tic-tac__input--{player}.tic-tac__input--{combos[0]}:checked ~ .tic-tac__input--{player}.tic-tac__input--{combos[1]}:checked ~ .tic-tac__input--{player}.tic-tac__input--{combos[2]}:checked
+			& ~ .tic-tac__cell
+				&:before,
 				&:after
-					border-color #f00
-		& ~ .tic-tac__game-over
-			opacity 1
-			visibility visible
-			z-index 1
-			&--draw
-				opacity 0
-				visibility hidden
-				z-index -1
+					border-color #cbcbcb
+				&--{combos[0]},
+				&--{combos[1]},
+				&--{combos[2]}
+					&:before,
+					&:after
+						border-color #f00
+			& ~ .tic-tac-gameover
+				display block
+				.tic-tac-gameover__score--win
+					display block
+				.tic-tac-gameover__score--draw
+					display none
+				.tic-tac-win__player--{player}
+					display inline-block
