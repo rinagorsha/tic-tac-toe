@@ -1,3 +1,33 @@
 size(width, height=width)
 	width width
 	height height
+
+tic(width=20px)
+	position relative
+	&:before,
+	&:after
+		content ""
+		width width
+		box-sizing border-box
+		border 2px solid #f00
+		position absolute
+		top 50%
+		left 50%
+	&:before
+		transform translate(-50%, -50%) rotate(45deg)
+	&:after
+		transform translate(-50%, -50%) rotate(-45deg)
+
+tac(width=20px)
+	position relative
+	&:before
+		content ""
+		size width
+		box-sizing border-box
+		border 2px solid #f00
+		border-width 4px
+		border-radius 50%
+		position absolute
+		top 50%
+		left 50%
+		transform translate(-50%, -50%)
