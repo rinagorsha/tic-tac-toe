@@ -92,9 +92,10 @@ module.exports = {
 
 	devServer: {
 		contentBase: path.resolve(__dirname, 'dist'),
-		host: 'localhost',
-		port: 3000,
-		openPage: '',
+		publicPath: '/',
+		host: '0.0.0.0',
+		port: 1337,
+		useLocalIp: true,
 		compress: true,
 		open: true,
 		stats: 'errors-only'
