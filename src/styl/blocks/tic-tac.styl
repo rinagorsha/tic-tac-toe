@@ -20,6 +20,7 @@ cell_size = 60px
 		border-left none
 		border-top none
 		background-color #fff
+		-webkit-tap-highlight-color transparent
 		display block
 		cursor pointer
 		&:nth-of-type(3n)
@@ -31,12 +32,14 @@ cell_size = 60px
 		&:before,
 		&:after
 			display none
-			border 2px solid #f00
+			background-color #f00
+			border 2px solid @background-color
 		&:hover
 			&:before,
 			&:after
 				display block
-				border-color #f3919c
+				background-color #f3919c
+				border-color @background-color
 		&--tic
 			tic()
 		&--tac
@@ -58,7 +61,8 @@ cell_size = 60px
 						cursor default
 						&:before,
 						&:after
-							border-color #f00
+							background-color #f00
+							border-color @background-color
 							display block
 					& ~ .tic-tac__cell--{i}:not(.tic-tac__cell--turn-{turn})
 						display none // hide same cells
@@ -74,6 +78,7 @@ cell_size = 60px
 	font-weight 700
 	text-align center
 	padding-top calc(100% + 15px)
+	padding-bottom 20px
 	position absolute
 	top 0
 	left 0
@@ -113,6 +118,11 @@ cell_size = 60px
 		display block
 		.tic-tac-gameover__score--draw
 			display block
+	& ~ .tic-tac__cell
+		&:before,
+		&:after
+			background-color #cbcbcb
+			border-color @background-color
 		
 // win
 win_combos = {
@@ -131,13 +141,15 @@ for _, combos in win_combos
 			& ~ .tic-tac__cell
 				&:before,
 				&:after
-					border-color #cbcbcb
+					background-color #cbcbcb
+					border-color @background-color
 				&--{combos[0]},
 				&--{combos[1]},
 				&--{combos[2]}
 					&:before,
 					&:after
-						border-color #f00
+						background-color #f00
+						border-color @background-color
 			& ~ .tic-tac-gameover
 				display block
 				.tic-tac-gameover__score--win
