@@ -12,7 +12,7 @@ cell_size = 60px
 	&__cell
 		size cell_size
 		box-sizing border-box
-		color #f00
+		color red-color
 		font-size 24px
 		font-weight 700
 		text-align center
@@ -32,7 +32,7 @@ cell_size = 60px
 		&:before,
 		&:after
 			display none
-			background-color #f00
+			background-color red-color
 			border 2px solid @background-color
 		&:hover
 			&:before,
@@ -61,7 +61,7 @@ cell_size = 60px
 						cursor default
 						&:before,
 						&:after
-							background-color #f00
+							background-color red-color
 							border-color @background-color
 							display block
 					& ~ .tic-tac__cell--{i}:not(.tic-tac__cell--turn-{turn})
@@ -96,7 +96,7 @@ cell_size = 60px
 		padding 5px 15px 7px
 		display inline-block
 		&:hover
-			background-color #f00
+			background-color red-color
 
 .tic-tac-win
 	margin-bottom 15px
@@ -148,7 +148,7 @@ for _, combos in win_combos
 				&--{combos[2]}
 					&:before,
 					&:after
-						background-color #f00
+						background-color red-color
 						border-color @background-color
 			& ~ .tic-tac-gameover
 				display block
