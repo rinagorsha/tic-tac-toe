@@ -13,7 +13,7 @@ module.exports = {
 
 	entry: [
 		'./src/styl/main.styl',
-		'./utils/pug.js'
+		'./src/pug/index.pug'
 	],
 	output: {
 		path: path.resolve(context, 'dist'),
@@ -30,7 +30,7 @@ module.exports = {
 				use: [{
 					loader: 'babel-loader',
 					options: {
-						presets: ['es2015']
+						presets: ['es2015', 'stage-0']
 					}
 				}]
 			}, {
@@ -95,9 +95,11 @@ module.exports = {
 		publicPath: '/',
 		host: '0.0.0.0',
 		port: 1337,
+		disableHostCheck: true,
 		useLocalIp: true,
 		compress: true,
 		open: true,
+		openPage: "index.html",
 		stats: 'errors-only'
 	}
 };

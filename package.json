@@ -2,14 +2,25 @@
   "name": "tic-tac-toe",
   "version": "1.0.0",
   "description": "pure css tic-tac-toe",
+  "author": "rinagorsha <rinagorsha@rccraft.ru>",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rinagorsha/tic-tac-toe"
+  },
   "main": "utils/webpack.config.js",
-  "devDependencies": {
+  "scripts": {
+    "serve": "./node_modules/.bin/webpack-dev-server --config=utils/webpack.config.js --color",
+    "compile": "./node_modules/.bin/webpack --config=utils/webpack.config.js --color"
+  },
+  "dependencies": {
     "autoprefixer-loader": "^3.2.0",
     "autoprefixer-stylus": "^0.14.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^6.4.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
     "babel-preset-es2015": "^6.22.0",
+    "babel-preset-stage-0": "^6.24.1",
     "clean-webpack-plugin": "^0.1.17",
     "copy-webpack-plugin": "^4.2.3",
     "css-loader": "^0.27.1",
@@ -31,13 +42,9 @@
     "y18n": "^3.2.1",
     "yargs-parser": "^7.0.0"
   },
-  "scripts": {
-    "serve": "./node_modules/.bin/webpack-dev-server --config=utils/webpack.config.js --color",
-    "compile": "./node_modules/.bin/webpack --config=utils/webpack.config.js --color"
-  },
-  "author": "rinagorsha <rinagorsha@rccraft.ru>",
-  "license": "ISC",
-  "dependencies": {
-    "npm": "^5.5.1"
+  "engines": {
+    "node": ">=7",
+    "npm": ">=5",
+    "yarn": ">=1.3"
   }
 }
