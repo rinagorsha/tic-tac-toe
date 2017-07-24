@@ -7,16 +7,13 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 const autoprefixer = require('autoprefixer-stylus');
 
-const context = path.resolve(__dirname, '../');
-module.exports = {
-  context: context,
-
+module.exports = (env) => ({
   entry: [
     './src/styl/main.styl',
     './src/pug/index.pug'
   ],
   output: {
-    path: path.resolve(context, 'dist'),
+    path: path.resolve('./dist'),
     filename: path.join('js', 'all.js')
   },
 
@@ -40,8 +37,7 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              name: '[path][name].html',
-              context: 'src/pug/',
+              name: '[name].html',
             }
           }, {
             loader: 'pug-html-loader',
@@ -61,7 +57,7 @@ module.exports = {
           }, {
             loader: 'stylus-loader',
             options: {
-              compress: false,
+              compress: env.NODE_ENV === 'production',
               use: [autoprefixer({browsers: ['> 1%', 'ie > 9', 'iOS > 6'], hideWarnings: true})],
             },
           },
@@ -84,22 +80,18 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new CleanPlugin(['dist/'], {
-      root: context,
       verbose: true,
       dry: false,
     }),
   ],
 
   devServer: {
-    contentBase: path.resolve(__dirname, 'dist'),
-    publicPath: '/',
     host: '0.0.0.0',
     port: 1337,
     disableHostCheck: true,
     useLocalIp: true,
     compress: true,
     open: true,
-    openPage: "index.html",
     stats: 'errors-only'
   }
-};
+});

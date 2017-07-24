@@ -1,27 +1,27 @@
 extends extends/_layout
 
 block content
-	section.tic-tac
-		.tic-tac__grid
-			//- inputs
-			for _, i in Array(9)
-				for _, turn in Array(9)
-					- var player = turn % 2 == 0 ? 'tic' : 'tac' //- tic player first
-					input.tic-tac__input(type="radio")&attributes({class: `tic-tac__input--turn-${turn} tic-tac__input--${i} tic-tac__input--${player}`, id: `turn-${turn}_cell-${i}_name-${player}`, name: `turn-${turn}_cell-${i}`})
+  section.tic-tac
+    .tic-tac__grid
+      //- inputs
+      for _, i in Array(9)
+        for _, turn in Array(9)
+          - var player = turn % 2 == 0 ? 'tic' : 'tac' //- tic player first
+          input.tic-tac__input(type="radio")&attributes({class: `tic-tac__input--turn-${turn} tic-tac__input--${i} tic-tac__input--${player}`, id: `turn-${turn}_cell-${i}_name-${player}`, name: `turn-${turn}_cell-${i}`})
 
-			//- cells
-			for _, turn in Array(9)
-				| <!-- turn #{turn} -->
-				for _, i in Array(9)
-					- var player = turn % 2 == 0 ? 'tic' : 'tac' //- tic player first
-					label.tic-tac__cell&attributes({for: `turn-${turn}_cell-${i}_name-${player}`, class: `tic-tac__cell--${i} tic-tac__cell--turn-${turn} tic-tac__cell--${player}`})
+      //- cells
+      for _, turn in Array(9)
+        | <!-- turn #{turn} -->
+        for _, i in Array(9)
+          - var player = turn % 2 == 0 ? 'tic' : 'tac' //- tic player first
+          label.tic-tac__cell&attributes({for: `turn-${turn}_cell-${i}_name-${player}`, class: `tic-tac__cell--${i} tic-tac__cell--turn-${turn} tic-tac__cell--${player}`})
 
-			.tic-tac-gameover
-				.tic-tac-gameover__score Game over
-				.tic-tac-gameover__score.tic-tac-gameover__score--draw Draw
-				.tic-tac-win
-					| Player
-					span.tic-tac-win__player.tic-tac-win__player--tic
-					span.tic-tac-win__player.tic-tac-win__player--tac
-					| wins!
-				a.tic-tac-gameover__button(href="/") Restart
+      .tic-tac-gameover
+        .tic-tac-gameover__score Game over
+        .tic-tac-gameover__score.tic-tac-gameover__score--draw Draw
+        .tic-tac-win
+          | Player
+          span.tic-tac-win__player.tic-tac-win__player--tic
+          span.tic-tac-win__player.tic-tac-win__player--tac
+          | wins!
+        a.tic-tac-gameover__button(href="") Restart

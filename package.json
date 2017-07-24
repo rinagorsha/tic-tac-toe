@@ -10,8 +10,8 @@
   },
   "main": "utils/webpack.config.js",
   "scripts": {
-    "serve": "./node_modules/.bin/webpack-dev-server --config=utils/webpack.config.js --color",
-    "compile": "./node_modules/.bin/webpack --config=utils/webpack.config.js --color"
+    "serve": "./node_modules/.bin/webpack-dev-server --config=webpack.config.js --env.NODE_ENV=develop --color",
+    "compile": "./node_modules/.bin/webpack --config=webpack.config.js --env.NODE_ENV=production --color"
   },
   "dependencies": {
     "autoprefixer-loader": "^3.2.0",
