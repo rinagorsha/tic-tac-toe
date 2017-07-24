@@ -1,159 +1,159 @@
 .tic-tac
-	box-sizing border-box
-	padding 20px
-	&__grid
-		width cell_size*3
-		display flex
-		flex-wrap wrap
-		position relative
-	&__cell
-		size cell_size
-		box-sizing border-box
-		color red_color
-		font-size 24px
-		font-weight 700
-		text-align center
-		border 2px solid #434343
-		border-left none
-		border-top none
-		background-color #fff
-		-webkit-tap-highlight-color transparent
-		display block
-		cursor pointer
-		&:nth-of-type(3n)
-			border-right none
-		&:nth-of-type(9n),
-		&:nth-of-type(9n-1),
-		&:nth-of-type(9n-2)
-			border-bottom none
-		&:before,
-		&:after
-			display none
-			background-color red_color
-			border 2px solid @background-color
-		&:hover
-			&:before,
-			&:after
-				display block
-				background-color #f3919c
-				border-color @background-color
-		&--tic
-			tic()
-		&--tac
-			tac()
+  box-sizing border-box
+  padding 20px
+  &__grid
+    width cell_size*3
+    display flex
+    flex-wrap wrap
+    position relative
+  &__cell
+    size cell_size
+    box-sizing border-box
+    color red_color
+    font-size 24px
+    font-weight 700
+    text-align center
+    border 2px solid #434343
+    border-left none
+    border-top none
+    background-color #fff
+    -webkit-tap-highlight-color transparent
+    display block
+    cursor pointer
+    &:nth-of-type(3n)
+      border-right none
+    &:nth-of-type(9n),
+    &:nth-of-type(9n-1),
+    &:nth-of-type(9n-2)
+      border-bottom none
+    &:before,
+    &:after
+      display none
+      background-color red_color
+      border 2px solid @background-color
+    &:hover
+      &:before,
+      &:after
+        display block
+        background-color #f3919c
+        border-color @background-color
+    &--tic
+      tic()
+    &--tac
+      tac()
 
-		for i in (0..8)
-			&--{i}
-				order i
+    for i in (0..8)
+      &--{i}
+        order i
 
-		for turn in (1..8)
-			&--turn-{turn}
-				display none
-	&__input
-		display none
-		for turn in (0..8)
-			for i in (0..8)
-				&--turn-{turn}&--{i}:checked
-					& ~ .tic-tac__cell--{i}.tic-tac__cell--turn-{turn} // checked cell
-						cursor default
-						&:before,
-						&:after
-							background-color red_color
-							border-color @background-color
-							display block
-					& ~ .tic-tac__cell--{i}:not(.tic-tac__cell--turn-{turn})
-						display none // hide same cells
-					& ~ .tic-tac__cell--turn-{turn}:not(.tic-tac__cell--{i})
-						display none // hide same turns
-					& ~ .tic-tac__cell--turn-{turn+1}
-						display block // show next turn
+    for turn in (1..8)
+      &--turn-{turn}
+        display none
+  &__input
+    display none
+    for turn in (0..8)
+      for i in (0..8)
+        &--turn-{turn}&--{i}:checked
+          & ~ .tic-tac__cell--{i}.tic-tac__cell--turn-{turn} // checked cell
+            cursor default
+            &:before,
+            &:after
+              background-color red_color
+              border-color @background-color
+              display block
+          & ~ .tic-tac__cell--{i}:not(.tic-tac__cell--turn-{turn})
+            display none // hide same cells
+          & ~ .tic-tac__cell--turn-{turn}:not(.tic-tac__cell--{i})
+            display none // hide same turns
+          & ~ .tic-tac__cell--turn-{turn+1}
+            display block // show next turn
 
 .tic-tac-gameover
-	width 100%
-	box-sizing border-box
-	font-size 24px
-	font-weight 700
-	text-align center
-	padding-top calc(100% + 15px)
-	padding-bottom 20px
-	position absolute
-	top 0
-	left 0
-	display none
-	&__score
-		margin-bottom 10px
-		display none
-	&__button
-		color #fff
-		font-weight 400
-		text-decoration none
-		font-size 20px
-		text-decoration none
-		background-color #cbcbcb
-		padding 5px 15px 7px
-		display inline-block
-		&:hover
-			background-color red_color
+  width 100%
+  box-sizing border-box
+  font-size 24px
+  font-weight 700
+  text-align center
+  padding-top calc(100% + 15px)
+  padding-bottom 20px
+  position absolute
+  top 0
+  left 0
+  display none
+  &__score
+    margin-bottom 10px
+    display none
+  &__button
+    color #fff
+    font-weight 400
+    text-decoration none
+    font-size 20px
+    text-decoration none
+    background-color #cbcbcb
+    padding 5px 15px 7px
+    display inline-block
+    &:hover
+      background-color red_color
 
 .tic-tac-win
-	margin-bottom 15px
-	display none
-	&__player
-		size 20px
-		margin-left 5px
-		margin-right 5px
-		vertical-align middle
-		display none
-		&--tic
-			tic()
-		&--tac
-			tac()
+  margin-bottom 15px
+  display none
+  &__player
+    size 20px
+    margin-left 5px
+    margin-right 5px
+    vertical-align middle
+    display none
+    &--tic
+      tic()
+    &--tac
+      tac()
 
 // draw
 .tic-tac__input--0:checked ~ .tic-tac__input--1:checked ~ .tic-tac__input--2:checked ~ .tic-tac__input--3:checked ~ .tic-tac__input--4:checked ~ .tic-tac__input--5:checked ~ .tic-tac__input--6:checked ~ .tic-tac__input--7:checked ~ .tic-tac__input--8:checked
-	& ~ .tic-tac-gameover
-		display block
-		.tic-tac-gameover__score
-			display block
-	& ~ .tic-tac__cell
-		&:before,
-		&:after
-			background-color #cbcbcb
-			border-color @background-color
-		
+  & ~ .tic-tac-gameover
+    display block
+    .tic-tac-gameover__score
+      display block
+  & ~ .tic-tac__cell
+    &:before,
+    &:after
+      background-color #cbcbcb
+      border-color @background-color
+    
 // win
 win_combos = {
-	hor_1: (0 1 2),
-	hor_2: (3 4 5),
-	hor_3: (6 7 8),
-	vert_1: (0 3 6),
-	vert_2: (1 4 7),
-	vert_3: (2 5 8),
-	cross_1: (0 4 8),
-	cross_2: (2 4 6)
+  hor_1: (0 1 2),
+  hor_2: (3 4 5),
+  hor_3: (6 7 8),
+  vert_1: (0 3 6),
+  vert_2: (1 4 7),
+  vert_3: (2 5 8),
+  cross_1: (0 4 8),
+  cross_2: (2 4 6)
 }
 for _, combos in win_combos
-	for player in 'tic' 'tac'
-		.tic-tac__input--{player}.tic-tac__input--{combos[0]}:checked ~ .tic-tac__input--{player}.tic-tac__input--{combos[1]}:checked ~ .tic-tac__input--{player}.tic-tac__input--{combos[2]}:checked
-			& ~ .tic-tac__cell
-				&:before,
-				&:after
-					background-color #cbcbcb
-					border-color @background-color
-				&--{combos[0]},
-				&--{combos[1]},
-				&--{combos[2]}
-					&:before,
-					&:after
-						background-color red_color
-						border-color @background-color
-			& ~ .tic-tac-gameover
-				display block
-				.tic-tac-gameover__score
-					display block
-				.tic-tac-gameover__score--draw
-					display none !important
-				.tic-tac-win
-					display block
-				.tic-tac-win__player--{player}
-					display inline-block
+  for player in 'tic' 'tac'
+    .tic-tac__input--{player}.tic-tac__input--{combos[0]}:checked ~ .tic-tac__input--{player}.tic-tac__input--{combos[1]}:checked ~ .tic-tac__input--{player}.tic-tac__input--{combos[2]}:checked
+      & ~ .tic-tac__cell
+        &:before,
+        &:after
+          background-color #cbcbcb
+          border-color @background-color
+        &--{combos[0]},
+        &--{combos[1]},
+        &--{combos[2]}
+          &:before,
+          &:after
+            background-color red_color !important
+            border-color @background-color
+      & ~ .tic-tac-gameover
+        display block
+        .tic-tac-gameover__score
+          display block
+        .tic-tac-gameover__score--draw
+          display none !important
+        .tic-tac-win
+          display block
+        .tic-tac-win__player--{player}
+          display inline-block
